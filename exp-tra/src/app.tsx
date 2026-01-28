@@ -1,43 +1,45 @@
-import { useState } from 'preact/hooks'
-import preactLogo from './assets/preact.svg'
-import viteLogo from '/vite.svg'
-import './app.css'
+import { useState } from "preact/hooks";
+import "./app.css";
+import { Header } from "./components/Header";
+import { Balance } from "./components/Balance";
+import { IncomeExpenses } from "./components/IncomeExpenses";
+import { TransactionList } from "./components/TransactionList";
+import { AddTransaction } from "./components/AddTransaction";
+
+interface Transaction {
+  id: number;
+  text: string;
+  amount: number;
+}
 
 export function App() {
-  const [count, setCount] = useState(0)
+  const [transactions, setTransactions] = useState<Transaction[]>([
+    { id: 1, text: "Flower", amount: -20 },
+    { id: 2, text: "Salary", amount: 300 },
+    { id: 3, text: "Book", amount: -10 },
+    { id: 4, text: "Camera", amount: 150 },
+  ]);
+
+  const addTransaction = (transaction: Transaction) => {
+    setTransactions([transaction, ...transactions]);
+  };
+
+  const deleteTransaction = (id: number) => {
+    setTransactions(
+      transactions.filter((transaction) => transaction.id !== id),
+    );
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} class="logo" alt="Vite logo" />
-        </a>
-        <a href="https://preactjs.com" target="_blank">
-          <img src={preactLogo} class="logo preact" alt="Preact logo" />
-        </a>
-      </div>
-      <h1>Vite + Preact</h1>
-      <div class="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/app.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p>
-        Check out{' '}
-        <a
-          href="https://preactjs.com/guide/v10/getting-started#create-a-vite-powered-preact-app"
-          target="_blank"
-        >
-          create-preact
-        </a>
-        , the official Preact + Vite starter
-      </p>
-      <p class="read-the-docs">
-        Click on the Vite and Preact logos to learn more
-      </p>
-    </>
-  )
+    <div className="container">
+      <Header />
+      <Balance transactions={transactions} />
+      <IncomeExpenses transactions={transactions} />
+      <TransactionList
+        transactions={transactions}
+        deleteTransaction={deleteTransaction}
+      />
+      <AddTransaction addTransaction={addTransaction} />
+    </div>
+  );
 }
