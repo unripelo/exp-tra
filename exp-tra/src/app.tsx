@@ -1,4 +1,4 @@
-import { useState } from "preact/hooks";
+import { useState, useEffect } from "preact/hooks";
 import "./app.css";
 import { Header } from "./components/Header";
 import { Balance } from "./components/Balance";
@@ -13,12 +13,14 @@ interface Transaction {
 }
 
 export function App() {
-  const [transactions, setTransactions] = useState<Transaction[]>([
-    { id: 1, text: "Flower", amount: -20 },
-    { id: 2, text: "Salary", amount: 300 },
-    { id: 3, text: "Book", amount: -10 },
-    { id: 4, text: "Camera", amount: 150 },
-  ]);
+  const [transactions, setTransactions] = useState<Transaction[]>(() => {
+    const localData = localStorage.getItem("transactions");
+    return localData ? JSON.parse(localData) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem("transactions", JSON.stringify(transactions));
+  }, [transactions]);
 
   const addTransaction = (transaction: Transaction) => {
     setTransactions([transaction, ...transactions]);
