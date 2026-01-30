@@ -36,12 +36,12 @@ export const AddTransaction: FunctionalComponent<AddTransactionProps> = ({
       <h3>Add new transaction</h3>
       <form onSubmit={onSubmit}>
         <div class="form-control">
-          <label htmlFor="text">Text</label>
+          <label htmlFor="text">Description</label>
           <input
             type="text"
             value={text}
             onInput={(e) => setText((e.target as HTMLInputElement).value)}
-            placeholder="Enter text..."
+            placeholder="Enter description..."
           />
         </div>
         <div class="form-control">
