@@ -5,11 +5,13 @@ import { Balance } from "./components/Balance";
 import { IncomeExpenses } from "./components/IncomeExpenses";
 import { TransactionList } from "./components/TransactionList";
 import { AddTransaction } from "./components/AddTransaction";
+import { ExpensePieChart } from "./components/ExpensePieChart";
 
-interface Transaction {
+export interface Transaction {
   id: number;
   text: string;
   amount: number;
+  category?: string;
 }
 
 export function App() {
@@ -37,6 +39,7 @@ export function App() {
       <Header />
       <Balance transactions={transactions} />
       <IncomeExpenses transactions={transactions} />
+      <ExpensePieChart transactions={transactions} />
       <TransactionList
         transactions={transactions}
         deleteTransaction={deleteTransaction}
