@@ -1,5 +1,5 @@
 # exp-tra
-exp tra means expense tracker using a certain languages
+exp tra means expense tracker using typescript
 
-# note
-on-progress
+# status
+done
